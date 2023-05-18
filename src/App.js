@@ -1,4 +1,5 @@
 // import { Route, Routes } from "react-router-dom";
+import axios from 'axios'
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import Home  from './components/Home/Home';
 import Detail from "./components/Detail/Detail";
@@ -7,6 +8,7 @@ import { ToastProvider } from 'react-toast-notifications';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/Form/Register";
 
+axios.defaults.baseURL="http://localhost:3001/";
 
 function App() {
   return (

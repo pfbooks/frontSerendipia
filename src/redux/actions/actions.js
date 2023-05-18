@@ -15,12 +15,17 @@ export const SORT_REVIEW = "SORT_REVIEW";
 export const ALL_REVIEWS = "ALL_REVIEWS";
 export const CREATE_USER = "CREATE_USER";
 
-const ENDPOINT_BOOKS = "http://localhost:3001/books";
-const ENDPOINT_GENRE = "http://localhost:3001/genre";
-const ENDPOINT_AUTHORS = "http://localhost:3001/authors";
-const ENDPOINT_USER= "http://localhost:3001/user"
-const API_URL = ''
+// const ENDPOINT_BOOKS = "http://localhost:3001/books";
+// const ENDPOINT_GENRE = "http://localhost:3001/genre";
+// const ENDPOINT_AUTHORS = "http://localhost:3001/authors";
+// const ENDPOINT_USER= "http://localhost:3001/user"
+// const API_URL = ''
 
+const ENDPOINT_BOOKS = "/books";
+const ENDPOINT_GENRE = "/genre";
+const ENDPOINT_AUTHORS = "/authors";
+const ENDPOINT_USER= "/user"
+const API_URL = ''
 
 export function allBooks() {
   return async (dispatch) => {
