@@ -8,7 +8,7 @@ import Detail from "./components/Detail/Detail";
 // import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/Form/Register";
 
-axios.defaults.baseURL="pfbooks-back-production.up.railway.app";
+axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app";
 
 function App() {
   return (
