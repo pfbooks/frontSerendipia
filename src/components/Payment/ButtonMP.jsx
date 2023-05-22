@@ -15,7 +15,7 @@ initMercadoPago('TEST-75896b1c-2143-43c1-82c4-274c670747f1');
 // Then some document.querySelector('.cho-container') to get the element
 // and then use the mp.checkout() method
 
-const endpoint= "https://pfbooks-back-production.up.railway.app"
+const endpoint = "https://pfbooks-back-production.up.railway.app"
 // const obj = {
 //     user: {
 //         name: 'Jorge',
@@ -43,7 +43,7 @@ const ButtonMP = () => {
 
 
     const pay = async() =>{
-        const response = await axios.post(`${endpoint}/payment`, obj)
+        const response = await axios.post(`/payment`, obj)
         setPreference(response.data)
     }
     useEffect(() => {
