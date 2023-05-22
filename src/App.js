@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from './components/Home/Home';
 import Detail from "./components/Detail/Detail";
 // import { ToastProvider } from 'react-toast-notifications';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/Form/Register";
 import LoginForm from "./components/Login/LoginForm";
 import axios from "axios";
