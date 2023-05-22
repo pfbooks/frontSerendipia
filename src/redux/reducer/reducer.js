@@ -13,8 +13,10 @@ import {
   ALL_GENRE,
   FILTER_BOOKS,
   SORT_PRICE,
+  GET_USER_BY_ID,
+  PUT_PROFILE_IMAGE,
 } from "../actions/actions";
-import { CREATE_USER } from "../actions/actions";
+import { CREATE_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_USER, GET_USER_DATA_FAILURE, GET_USER_DATA_SUCCESS } from "../actions/actions";
 
 const initialState = {
   books: [],
@@ -23,7 +25,7 @@ const initialState = {
   authors: [],
   copyBooks: [],
   allReviews: [],
-  user: [],
+  user: {},
   isLoading: false,
   error: null,
 };
@@ -66,6 +68,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         detail: action.payload,
       };
+
+      case GET_USER_BY_ID:
+        return {
+          ...state,
+          user: action.payload
+        }
+
+      case PUT_PROFILE_IMAGE:
+        return {
+          ...state,
+          user: action.payload
+        } 
 
     case CREATE_REVIEW:
       return {
@@ -178,8 +192,38 @@ const rootReducer = (state = initialState, action) => {
       };
     //REDUCERS USER
     case CREATE_USER:
-      return{
+      return {
         ...state,
+      };
+    case LOGIN_SUCCESS:
+        return {
+          ...state,
+          user: action.payload,
+          error: null,
+        };
+    case LOGIN_FAILURE:
+        return {
+          ...state,
+          user: null,
+          error: action.payload,
+        };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: null,
+        error: null,
+      };
+    case GET_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        error: null,
+      };
+    case GET_USER_DATA_FAILURE:
+      return {
+        ...state,
+        user: null,
+        error: action.payload,
       };
     default:
       return { ...state };
