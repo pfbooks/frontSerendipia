@@ -29,7 +29,8 @@ const ButtonMP = () => {
     const [prefrenceId, setPreference] = useState('')
     const { cart } = useCart();
     const user = JSON.parse(localStorage.getItem("user"));
-    const obj = {
+    if(user){
+        const obj = {
         user: {
             name: user.name,
             lastName: user.lastName,
@@ -37,6 +38,17 @@ const ButtonMP = () => {
         },
         items: cart
     }
+    }else{
+        const obj = {
+            user: {
+                name: "Pepito",
+                lastname: "Perez",
+                email: "pepitoperez@gmail.com",
+            },
+            items: cart
+        }
+    }
+    
 
 
 
