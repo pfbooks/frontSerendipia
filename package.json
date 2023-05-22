@@ -26,14 +26,14 @@
     "react-icons": "^4.8.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --openssl-legacy-provider",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
