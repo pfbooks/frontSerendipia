@@ -28,11 +28,12 @@ const endpoint= "http://localhost:3001"
 const ButtonMP = () => {
     const [prefrenceId, setPreference] = useState('')
     const { cart } = useCart();
+    const user = JSON.parse(localStorage.getItem("user"));
     const obj = {
         user: {
-            name: 'Jorge',
-            lastName: 'JImenez',
-            email: 'jorge970102@gmail.com'
+            name: user.name,
+            lastName: user.lastName,
+            email: user.email
         },
         items: cart
     }
