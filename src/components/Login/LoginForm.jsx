@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./LoginForm.module.css";
 import { GoogleLogin } from "@react-oauth/google";
-import { useToasts } from "react-toast-notifications";
+// import { useToasts } from "react-toast-notifications";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
@@ -20,7 +20,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user);
-  const { addToast } = useToasts();
+  // const { addToast } = useToasts();
   const [showPassword, setShowPassword] = useState(false);
 
   //validations
@@ -65,12 +65,12 @@ const LoginForm = () => {
       } else {
         const user = result.payload; // Obtener el objeto del usuario desde el resultado
         const name = user.name;
-        const toastContent = (
-          <div>
-            Bienvenido, <strong>{name}</strong>
-          </div>
-        );
-        addToast(toastContent, { appearance: "success" });
+        // const toastContent = (
+        //   <div>
+        //     Bienvenido, <strong>{name}</strong>
+        //   </div>
+        // );
+        // addToast(toastContent, { appearance: "success" });
         history.push("/");
       }
     });
@@ -83,12 +83,12 @@ const LoginForm = () => {
       } else {
         const user = result.payload; // Obtener el objeto del usuario desde el resultado
         const name = user.name;
-        const toastContent = (
-          <div>
-            Bienvenido, <strong>{name}</strong>
-          </div>
-        );
-        addToast(toastContent, { appearance: "success" });
+        // const toastContent = (
+        //   <div>
+        //     Bienvenido, <strong>{name}</strong>
+        //   </div>
+        // );
+        // addToast(toastContent, { appearance: "success" });
         history.push("/");
       }
     });

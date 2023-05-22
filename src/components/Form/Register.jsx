@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "./Register.module.css";
 import * as yup from "yup";
-import { useToasts } from "react-toast-notifications";
+// import { useToasts } from "react-toast-notifications";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FaHome } from "react-icons/fa";
 
@@ -36,13 +36,13 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const { addToast } = useToasts();
+  // const { addToast } = useToasts();
   const history = useHistory();
 
   const onSubmit = (data) => {
     dispatch(createUser(data))
       .then(() => {
-        addToast("Usuario creado correctamente", { appearance: "success" });
+        // addToast("Usuario creado correctamente", { appearance: "success" });
         history.push("/login")
       })
       .catch((error) => {
