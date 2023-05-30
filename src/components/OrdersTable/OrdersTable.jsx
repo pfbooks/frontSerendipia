@@ -39,7 +39,7 @@ const OrdersTable = () => {
       headerName: 'User name',
       width: 150,
       renderCell: (params) => (
-        <p>{params.row.User.name + params.row.User.lastName}</p>
+        <p>{params.row.User?.name + params.row.User?.lastName}</p>
       )
     },
     {
@@ -47,7 +47,7 @@ const OrdersTable = () => {
       headerName: 'User email',
       width: 250,
       renderCell: (params) => (
-        <p>{params.row.User.email}</p>
+        <p>{params.row.User?.email}</p>
       )
     },
     {
