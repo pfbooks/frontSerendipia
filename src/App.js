@@ -19,7 +19,7 @@ import ReviewForm from "./components/Reviews/ReviewForm"
 import  ShopList  from "./components/ShopList/ShopList";
 import { useLocation } from "react-router-dom";
 import axios from 'axios'
-axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app/";
+axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app";
 
 
 function App() {
