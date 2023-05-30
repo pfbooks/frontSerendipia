@@ -50,7 +50,7 @@ const ReviewForm = ({ bookId, user, setBookId }) => {
       setBookId('')
       return alert('Thanks for you review!')
     }
-    else return alert('Select a rating star')
+    else return alert('Select a book and rating star')
   };
 
   return (
