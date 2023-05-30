@@ -32,7 +32,7 @@ const CardsContainer = (props) => {
     if (!props.isLoading && props.books.length === 0) {
       const timeoutId = setTimeout(() => {
         setNoMatch(true);
-      }, 500);
+      }, 1000);
       return () => {
         clearTimeout(timeoutId);
       };
