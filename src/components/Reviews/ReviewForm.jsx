@@ -42,7 +42,7 @@ const ReviewForm = ({ bookId, user, setBookId }) => {
       userName: user.name,
     };
      console.log(reviewData)
-    if( rating !== 0 ){
+     if( rating !== 0 && bookId !== '' ){
 
       dispatch(createReview(reviewData));
       setRating(0)
