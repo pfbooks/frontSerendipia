@@ -122,10 +122,18 @@ export function filterBooks(genre, author) {
                     payload: result.data,
                 });
             });
+        } else if (!author && !genre) {
+            await axios.get(`${ENDPOINT_BOOKS}`).then((result) => {
+                return dispatch({
+                    type: FILTER_BOOKS,
+                    payload: result.data,
+                });
+            });
         }
 
     };
 }
+
 
 export function bookByTitle(title) {
     return async (dispatch) => {
