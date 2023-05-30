@@ -5,19 +5,11 @@ import styles from './Filters.module.css';
 
 const Filters = ({ handlePageChange }) => {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books);
   const genres = useSelector((state) => state.genres);
   const authors = useSelector((state) => state.authors);
   const [order, setOrder] = useState('');
   const [genre, setGenre] = useState('');
   const [author, setAuthor] = useState('');
-  const [aut, setAut] = useState(authors);
-  const [gen, setGen] = useState(genres);
-
-
-    useEffect(() => {
-    dispatch(filterBooks(genre, author));
-  }, [dispatch, genre, author]);
 
   useEffect(() => {
     dispatch(allBooks());
@@ -26,37 +18,27 @@ const Filters = ({ handlePageChange }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (genre) {
-      const filteredAuthors = authors.filter(a =>
-        books.some(book => book.genre.includes(genre) && book.author === a)
-      );
-      setAut(filteredAuthors);
-    } else {
-      setAut(authors);
-    }
-
-    if(author){
-      const filteredGenres = genres.filter(a => books.some(book => book.author === author && book.genre.includes(a)))
-      setGen(filteredGenres)
-    } else {
-      setGen(genres)
-    }
-  }, [genre, authors, books]);
+    dispatch(filterBooks(genre, author));
+  }, [dispatch, genre, author]);
 
   const handleFilter = (event) => {
-    const { name, value } = event.target;
-    if (name === 'genre') {
-      setGenre(value);
-      // setAuthor('');
-    } else if (name === 'author') {
-      setAuthor(value);
+    if (event.target.name === 'genre' && event.target.value !== 'All') {
+      setGenre(event.target.value);
+      dispatch(allAuthors(event.target.value));
+      //setAuthor('');
     }
-    setOrder(value + order);
+    if (event.target.name === 'author' && event.target.value !== 'All') {
+      setAuthor(event.target.value);
+      dispatch(allGenre(event.target.value))
+    }
+    setOrder(event.target.value + order);
     handlePageChange(1);
   };
 
   const handleAllBooks = () => {
     dispatch(allBooks());
+    dispatch(allGenre());
+    dispatch(allAuthors());
     setGenre('');
     setAuthor('');
   };
@@ -65,14 +47,14 @@ const Filters = ({ handlePageChange }) => {
     <div>
       <select className={styles.selectFilters} onChange={handleFilter} name='genre' value={genre}>
         <option value="">By genre</option>
-        {gen?.map(genre => (
+        {genres.map(genre => (
           <option key={genre} value={genre}>{genre}</option>
         ))}
       </select>
 
       <select className={styles.selectFilters} onChange={handleFilter} name='author' value={author}>
         <option value="">By author</option>
-        {aut?.map(author => (
+        {authors.map(author => (
           <option key={author} value={author}>{author}</option>
         ))}
       </select>
@@ -83,7 +65,6 @@ const Filters = ({ handlePageChange }) => {
 };
 
 export default Filters;
-
 
 
 
