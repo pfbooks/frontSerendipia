@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus, faTrash, faDollarSign } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faPlus,
+  faMinus,
+  faTrash,
+  faDollarSign,
+} from "@fortawesome/free-solid-svg-icons";
+import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./Chart.module.css";
 import ButtonMP from "../Payment/ButtonMP";
+import { CartContext } from "../../context/cart";
 
 const Chart = () => {
   const {
@@ -13,27 +19,33 @@ const Chart = () => {
     increaseQuantity,
     decreaseQuantity,
     clearCart,
-  } = useCart();
-
+  } = useCart(CartContext);
   const handleRemoveFromCart = (productId) => {
     removeFromCart({ id: productId });
   };
-
+  const history = useHistory();
   const handleIncreaseQuantity = (productId) => {
     increaseQuantity({ id: productId });
   };
-
+  
   const handleDecreaseQuantity = (productId) => {
-    const product = cart.find(item => item.id === productId);
+    const product = cart.find((item) => item.id === productId);
     if (product && product.quantity === 1) {
       handleRemoveFromCart(productId);
     } else {
       decreaseQuantity({ id: productId });
     }
   };
-
+  const [isLogged, setIsLogged] = useState(false)
   const handleClearCart = () => {
     clearCart();
+  };
+  const user = JSON.parse(localStorage.getItem("user"));
+  const handleMP = () => {
+    if(!user){
+      history.push("/login")
+    } 
+    setIsLogged(true)
   };
 
   const calculateTotal = () => {
@@ -46,19 +58,28 @@ const Chart = () => {
 
   return (
     <div>
-      <h2>Carrito de compras</h2>
+      <h2 className={styles.title}>Shopping Cart</h2>
       {cart.length === 0 ? (
-        <p>No hay productos en el carrito</p>
+        <div className={styles.emptyCartContainer}>
+          <p>No products yet</p>
+          <Link to="/">
+            <button className={styles.buttonEmptyCart}>Go Shopping</button>
+          </Link>
+        </div>
       ) : (
         <div>
+          <div className={styles.container}>
+            <FontAwesomeIcon icon={faDollarSign} className={styles.icon} />
+            <p className={styles.total}>Total: ${calculateTotal()}</p>
+          </div>
           <div className={styles.cartContainer}>
             {cart.map((product) => (
               <div key={product.id} className={styles.productContainer}>
                 <img src={product.image} alt={product.title} />
                 <div>
                   <h3>{product.title}</h3>
-                  <p>Cantidad: {product.quantity}</p>
-                  <p>Precio: ${product.unit_price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Price: ${product.unit_price}</p>
                   <div>
                     <button onClick={() => handleIncreaseQuantity(product.id)}>
                       <FontAwesomeIcon icon={faPlus} />
@@ -77,14 +98,20 @@ const Chart = () => {
               </div>
             ))}
           </div>
-          <button className={styles.cleanButton} onClick={handleClearCart}>Limpiar carrito</button>
-          <div className={styles.totalContainer}>
-            <FontAwesomeIcon icon={faDollarSign} />
-            <p>Total gastado: ${calculateTotal()}</p>
-          </div>
           <div>
-            <ButtonMP />
+            {
+              !isLogged &&
+              <button className={styles.cleanButton} onClick={handleMP}>
+              Go to pay
+            </button>}
+            {
+              isLogged && <ButtonMP />
+            }
           </div>
+          <br />
+          <button className={styles.cleanButton} onClick={handleClearCart}>
+            Clean chart
+          </button>
         </div>
       )}
     </div>

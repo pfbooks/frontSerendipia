@@ -15,8 +15,21 @@ import {
   SORT_PRICE,
   GET_USER_BY_ID,
   PUT_PROFILE_IMAGE,
+  GET_USERS,
+  USER_DISABLED,
+  UPDATE_USER_DATA,
+  ALL_ORDERS,
+  ORDER_BY_USER,
+  CREATE_BOOK
 } from "../actions/actions";
-import { CREATE_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_USER, GET_USER_DATA_FAILURE, GET_USER_DATA_SUCCESS } from "../actions/actions";
+import {
+  CREATE_USER,
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  LOGOUT_USER,
+  GET_USER_DATA_FAILURE,
+  GET_USER_DATA_SUCCESS,
+} from "../actions/actions";
 
 const initialState = {
   books: [],
@@ -25,9 +38,12 @@ const initialState = {
   authors: [],
   copyBooks: [],
   allReviews: [],
+  orderByUser: [],
   user: {},
+  users: [],
   isLoading: false,
   error: null,
+  orders: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -57,6 +73,12 @@ const rootReducer = (state = initialState, action) => {
         copyBooks: action.payload,
       };
 
+    case ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+
     case GET_BOOK_TITLE:
       return {
         ...state,
@@ -69,17 +91,17 @@ const rootReducer = (state = initialState, action) => {
         detail: action.payload,
       };
 
-      case GET_USER_BY_ID:
-        return {
-          ...state,
-          user: action.payload
-        }
+    case GET_USER_BY_ID:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
-      case PUT_PROFILE_IMAGE:
-        return {
-          ...state,
-          user: action.payload
-        } 
+    case PUT_PROFILE_IMAGE:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     case CREATE_REVIEW:
       return {
@@ -185,6 +207,22 @@ const rootReducer = (state = initialState, action) => {
         allReviews: action.payload,
       };
 
+        case CLEAR:
+            return {
+                ...state,
+                detail: action.payload,
+            };
+        //REDUCERS USER
+        case CREATE_USER:
+            return {
+                ...state,
+            };
+        case CREATE_BOOK:
+            return {
+                ...state,
+            };
+
+
     case CLEAR:
       return {
         ...state,
@@ -195,24 +233,40 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case USER_DISABLED:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case LOGIN_SUCCESS:
-        return {
-          ...state,
-          user: action.payload,
-          error: null,
-        };
+      return {
+        ...state,
+        user: action.payload,
+        error: null,
+      };
+
     case LOGIN_FAILURE:
-        return {
-          ...state,
-          user: null,
-          error: action.payload,
-        };
+      return {
+        ...state,
+        user: null,
+        error: action.payload,
+      };
+
     case LOGOUT_USER:
       return {
         ...state,
         user: null,
         error: null,
       };
+
+    case UPDATE_USER_DATA:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case GET_USER_DATA_SUCCESS:
       return {
         ...state,
@@ -225,6 +279,17 @@ const rootReducer = (state = initialState, action) => {
         user: null,
         error: action.payload,
       };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case ORDER_BY_USER:
+      return {
+        ...state,
+        orderByUser: action.payload,
+      };
+
     default:
       return { ...state };
   }

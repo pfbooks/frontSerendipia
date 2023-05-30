@@ -1,54 +1,73 @@
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from './components/Home/Home';
+import NavBar from "./components/NavBar/NavBar";
+import AdminBar from "./components/AdminBar/AdminBar";
+import Home from "./components/Home/Home";
 import Detail from "./components/Detail/Detail";
-// import { ToastProvider } from 'react-toast-notifications';
-// import 'react-toastify/dist/ReactToastify.css';
 import Register from "./components/Form/Register";
 import LoginForm from "./components/Login/LoginForm";
-import axios from "axios";
-import { getUserData } from "./redux/actions/actions";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import Chart from "./components/Chart/Chart";
 import NotFound from "./components/NotFound/NotFound";
-axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app";
+import Success from "./components/Payment/Success";
+import BooksTable from "./components/BooksTable/BooksTable";
+import About from "./components/AboutUs/About";
+import UsersTable from "./components/UsersTable/UsersTable";
+import OrdersTable from "./components/OrdersTable/OrdersTable";
+import { useSelector } from "react-redux";
+import ReviewForm from "./components/Reviews/ReviewForm"
+import  ShopList  from "./components/ShopList/ShopList";
+import { useLocation } from "react-router-dom";
+import axios from 'axios'
+axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app/";
+
 
 function App() {
-  const ENDPOINT_USER = "/user";
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
 
+  const [admin, setAdmin] = useState(false);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
-      axios
-        .get(`${ENDPOINT_USER}`, { headers: { Authorization: `Bearer ${user.token}` } }, { withCredentials: true })
-        .then((response) => {
-          dispatch(getUserData(response.data.user));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (user) {
+      if (user && user.adminRole) {
+        setAdmin(true);
+      } else {
+        setAdmin(false);
+      }
+    } else {
+      setAdmin(false);
     }
-  }, [dispatch]);
+  }, [user]);
+
+  // const isProfileView = location.pathname === "/profile";
 
   return (
-    // <ToastProvider>
       <div>
         <NavBar />
+        {admin && (
+          location.pathname.includes("profile") ||
+          location.pathname.includes("/users") ||
+          location.pathname.includes("/books") ||
+          location.pathname.includes("/orders")) &&
+        <AdminBar />}
         <Switch>
+          <Route path="/users" component={UsersTable} />
+          <Route path="/books" component={BooksTable} />
+          <Route path="/orders" component={OrdersTable} />
           <Route exact path="/" component={Home} />
           {/* <Route path="/login" component={Form} /> */}
+          <Route path="/shop/:userId" component={ShopList} />
           <Route path="/detail/:id" component={Detail} />
-          <Route path="/chart" component={Chart} />
-          <Route exact path="/login" component={LoginForm} />
           <Route path="/register" component={Register} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/profile" component={Profile} />
+          <Route path="/chart" component={Chart} />
+          <Route path="/success" component={Success} />
+          <Route path="/about" component={About} />
+          <Route path="/addreview" component={ReviewForm} />
           <Route component={NotFound} />
         </Switch>
       </div>
-    // </ToastProvider>
   );
 }
 

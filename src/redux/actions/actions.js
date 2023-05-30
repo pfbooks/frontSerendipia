@@ -16,35 +16,60 @@ export const SORT_REVIEW = "SORT_REVIEW";
 export const ALL_REVIEWS = "ALL_REVIEWS";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_USER_DATA_FAILURE = "GET_USER_DATA_FAILURE";
-export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS"
+export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS";
 export const SET_USER = 'SET_USER';
-export const GET_USER_BY_ID = "GET_USER_BY_ID"
-export const PUT_PROFILE_IMAGE = "PUT_PROFILE_IMAGE"
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const PUT_PROFILE_IMAGE = "PUT_PROFILE_IMAGE";
+export const GET_USERS = "GET_USERS";
+export const USER_DISABLED = "USER_DISABLED";
+export const UPDATE_USER_DATA = "UPDATE_USER_DATA";
+export const UPDATE_BOOK = "UPDATE_BOOK";
+export const ALL_ORDERS = "ALL_ORDERS";
+export const POST_REVIEW = "POST_REVIEW";
+export const ORDER_BY_USER = "ORDER_BY_USER";
+export const CREATE_BOOK = "CREATE_BOOK";
 
-
+// const ENDPOINT_ORDER = "http://localhost:3001/order";
+// const ENDPOINT_ADMIN = "http://localhost:3001/admin";
+// const ENDPOINT_BOOKS = "http://localhost:3001/books";
+// const ENDPOINT_GENRE = "http://localhost:3001/genre";
+// const ENDPOINT_AUTHORS = "http://localhost:3001/authors";
+// const ENDPOINT_USER = "http://localhost:3001/user";
+// const ENDPOINT_LOGIN = "http://localhost:3001/login";
+// const ENDPOINT_LOGIN_WHIT_GOOGLE = "http://localhost:3001/login/google"
+const API_URL = ''
+// const ENDPOINT_REVIEW = "http://localhost:3001/reviews";
+// const ENDPOINT_ORDER_BY_USER = "http://localhost:3001/order/by-user-id/";
 const ENDPOINT_BOOKS = "/books";
 const ENDPOINT_GENRE = "/genre";
 const ENDPOINT_AUTHORS = "/authors";
 const ENDPOINT_USER= "/user"
 const ENDPOINT_LOGIN_WHIT_GOOGLE = "/login/google"
 const ENDPOINT_LOGIN = "/login";
-// const ENDPOINT_BOOKS = "http://localhost:3001/books";
-// const ENDPOINT_GENRE = "http://localhost:3001/genre";
-// const ENDPOINT_AUTHORS = "http://localhost:3001/authors";
-// const ENDPOINT_USER = "http://localhost:3001/user";
-// // const ENDPOINT_LOGIN = "http://localhost:3001/login";
-// const ENDPOINT_LOGIN_WHIT_GOOGLE = "http://localhost:3001/login/google"
-const API_URL = ''
-
+const ENDPOINT_ORDER = "/order"
+const ENDPOINT_ADMIN = "/admin"
+const ENDPOINT_REVIEW = "/reviews"
+const ENDPOINT_ORDER_BY_USER = "/order/by-user-id/"
 
 export function allBooks() {
     return async (dispatch) => {
         await axios.get(`${ENDPOINT_BOOKS}`).then((result) => {
             return dispatch({
                 type: ALL_BOOKS,
+                payload: result.data,
+            });
+        });
+    };
+}
+
+export function allOrders() {
+    return async (dispatch) => {
+        await axios.get(`${ENDPOINT_ORDER}`).then((result) => {
+            return dispatch({
+                type: ALL_ORDERS,
                 payload: result.data,
             });
         });
@@ -121,15 +146,48 @@ export function bookByTitle(title) {
 export function userById(id){
     return async (dispatch) => {
         try {
-            const response = await axios.get(`${ENDPOINT_USER}/${id}`)
-            const data = response.data
+            const localStorageUser = JSON.parse(localStorage.getItem('user'))
+            const response = await axios.get(`${ENDPOINT_USER}/${id}`, {
+                headers: {
+                    Authorization: `${localStorageUser.token}`,
+                },
+            })
+            let updatedUser = response.data
+            updatedUser.token = localStorageUser.token
+            localStorage.setItem('user', JSON.stringify(updatedUser))
             dispatch({
                 type: GET_USER_BY_ID,
-                payload: data,
+                payload: updatedUser,
             })
         } catch (error) {
             console.log("User info error:", error)
         }
+    }
+}
+
+export const userDisablement = (id, isActive) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.put(`${ENDPOINT_ADMIN}/enablementUser`, { isActive: !isActive, id });
+        const data = response.data;
+        dispatch({
+          type: USER_DISABLED,
+          payload: data,
+        })
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+  }
+
+export function updateBook(book) {
+    return async (dispatch) => {
+        await axios.put(`${ENDPOINT_BOOKS}/update`, book).then(result  => {
+            return dispatch({
+                type: UPDATE_BOOK,
+                payload: result.data
+            })
+        })
     }
 }
 
@@ -166,11 +224,11 @@ export function bookById(id) {
 export function createReview(review) {
     console.log(review);
     return async (dispatch) => {
-        await axios.post(`${API_URL}/reviews`, review).then((result) => {
+        await axios.post(`${ENDPOINT_REVIEW}`, review).then((result) => {
             return dispatch({
                 type: CREATE_REVIEW,
                 payload: result,
-            });
+            })
         });
     };
 }
@@ -254,6 +312,18 @@ export function createUser(user) {
     }
 }
 
+export function createBook(book){
+    console.log(book);
+    return async (dispatch) => {
+        await axios.post(`${ENDPOINT_BOOKS}/addBook`, book).then((result) => {
+            return dispatch({
+                type: CREATE_BOOK,
+                payload: result.data
+            })
+        })
+    }
+}
+
 
 export const loginUser = (email, password) => async (dispatch) => {
     try {
@@ -294,6 +364,26 @@ export const logoutUser = () => (dispatch) => {
     });
 };
 
+export const getAllUser = () => async (dispatch) =>{
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const res = await axios.get(`${ENDPOINT_USER}`, {
+            headers: {
+                Authorization: `${user.token}`,
+            },
+        });
+        const UsersData = res.data
+
+        dispatch({
+            type: GET_USERS,
+            payload: UsersData
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
 export const getUserData = () => async (dispatch) => {
     try {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -316,6 +406,29 @@ export const getUserData = () => async (dispatch) => {
         });
     }
 };
+
+
+export const updateUserDataById = ( name, lastName, email) => async (dispatch) =>{
+    try {
+        const localStorageUser = JSON.parse(localStorage.getItem("user"));
+        const id = localStorageUser.id;
+        const data = { id, name, lastName, email}
+        console.log("data", data)
+        const res = await axios.put(`${ENDPOINT_USER}/${id}`, data );
+        if (res.status === 200) {
+            const userData = res.data.user;
+            userData.token = localStorageUser.token
+            console.log(userData)
+            localStorage.setItem('user', JSON.stringify(userData))
+            return dispatch({
+                type: UPDATE_USER_DATA,
+                payload: userData,
+            });
+        }
+    } catch (error) {
+            console.log(error.message)
+    }
+}
 
 
 export const loginWhitGoogle = (credential) => async (dispatch) => {
@@ -342,3 +455,18 @@ export const loginWhitGoogle = (credential) => async (dispatch) => {
         });
     }
 };
+export function orderByIdUser(userId) {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`${ENDPOINT_ORDER_BY_USER}${userId}` );
+            const data = response.data;
+            dispatch({
+                type: ORDER_BY_USER,
+                payload: data,
+            });
+        } catch (error) {
+            console.log("orderByUser:", error);
+        }
+    };
+}
+
