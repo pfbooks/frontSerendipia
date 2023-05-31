@@ -69,7 +69,11 @@ export function allBooks() {
 
 export function allBooksAdmin() {
     return async (dispatch) => {
-        await axios.get(`${ENDPOINT_ADMIN}/allBooks`).then((result) => {
+        const localStorageUser = JSON.parse(localStorage.getItem('user'))
+        await axios.get(`${ENDPOINT_ADMIN}/allBooks`, { 
+            headers: {
+            Authorization: `${localStorageUser.token}`,
+        }, }).then((result) => {
             return dispatch({
                 type: ALL_BOOKS_ADMIN,
                 payload: result.data,
