@@ -10,6 +10,7 @@ import lautaroImage from './lautaro.jpg';
 import profile4Image from './profile4.jpg';
 import marcosImage from './marcos.jpeg';
 import profile6Image from './profile6.jpg';
+import gastonImage from "./gaston.jpeg";
 import '@fortawesome/fontawesome-free/css/all.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -61,14 +62,14 @@ const About = () => {
       lastName: 'Soto',
       photo: lautaroImage,
       github: 'https://github.com/LautaroUnlp',
-      linkedin: 'https://www.linkedin.com/in/lautarosoto'
+      linkedin: 'https://www.linkedin.com/in/lautarosoto1/'
     },
     {
       name: 'Jorge',
       lastName: 'Jimenez',
       photo: profile4Image,
       github: 'https://github.com/JorgeJ97',
-      linkedin: 'https://www.linkedin.com/in/lautarosoto'
+      linkedin: 'https://www.linkedin.com'
     },
     {
       name: 'Marcos',
@@ -82,7 +83,7 @@ const About = () => {
       lastName: 'Garcia Juri',
       photo: profile6Image,
       github: 'https://github.com/gastigarciajuri',
-      linkedin: 'https://www.linkedin.com/in/lautarosoto'
+      linkedin: 'www.linkedin.com/in/gastón-garcia-juri-76a3b2212'
     },
   ];
 
