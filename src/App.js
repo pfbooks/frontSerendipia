@@ -21,8 +21,22 @@ import { useLocation } from "react-router-dom";
 import axios from 'axios'
 axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app";
 
-
+function PrivateRoute({ component: Component, admin, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        admin ? (
+          <Component {...props} />
+        ) : (
+          <NotFound />
+        )
+      }
+    />
+  );
+}
 function App() {
+  
   const user = useSelector((state) => state.user);
   const location = useLocation();
   const userLocalStorage = JSON.parse(localStorage.getItem("user"));
@@ -48,12 +62,23 @@ function App() {
           location.pathname.includes("/books") ||
           location.pathname.includes("/orders")) &&
         <AdminBar />}
+        <PrivateRoute
+          path="/users"
+          component={UsersTable}
+          admin={admin}
+        />
+        <PrivateRoute
+          path="/books"
+          component={BooksTable}
+          admin={admin}
+        />
+        <PrivateRoute
+          path="/orders"
+          component={OrdersTable}
+          admin={admin}
+        />
         <Switch>
-          <Route path="/users" component={UsersTable} />
-          <Route path="/books" component={BooksTable} />
-          <Route path="/orders" component={OrdersTable} />
           <Route exact path="/" component={Home} />
-          {/* <Route path="/login" component={Form} /> */}
           <Route path="/shop/:userId" component={ShopList} />
           <Route path="/detail/:id" component={Detail} />
           <Route path="/register" component={Register} />
