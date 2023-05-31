@@ -16,7 +16,7 @@ const Success = () => {
   useEffect(() => {
     const axiosFunc = async () => {
       await axios
-        .post("http://localhost:3001/order/add", obj)
+        .post("/order/add", obj)
         .then((res) => console.log(res))
         .catch((error) => console.log(`error del post: ${error}`));
     };
