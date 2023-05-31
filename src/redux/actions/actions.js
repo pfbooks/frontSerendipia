@@ -228,7 +228,12 @@ export const bookAvailable = (id, availability) => {
 export const userDisablement = (id, isActive) => {
     return async (dispatch) => {
       try {
-        const response = await axios.put(`${ENDPOINT_ADMIN}/enablementUser`, { isActive: !isActive, id });
+        const localStorageUser = JSON.parse(localStorage.getItem('user'))
+        const response = await axios.put(`${ENDPOINT_ADMIN}/enablementUser`, { isActive: !isActive, id }, {
+            headers: {
+                Authorization: `${localStorageUser.token}`,
+            },
+        });
         const data = response.data;
         dispatch({
           type: USER_DISABLED,
@@ -242,7 +247,12 @@ export const userDisablement = (id, isActive) => {
 
 export function updateBook(book) {
     return async (dispatch) => {
-        await axios.put(`${ENDPOINT_BOOKS}/update`, book).then(result  => {
+        const localStorageUser = JSON.parse(localStorage.getItem('user'))
+        await axios.put(`${ENDPOINT_BOOKS}/update`, book, {
+            headers: {
+                Authorization: `${localStorageUser.token}`,
+            },
+        }).then(result  => {
             return dispatch({
                 type: UPDATE_BOOK,
                 payload: result.data
