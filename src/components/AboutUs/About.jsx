@@ -9,7 +9,6 @@ import natalyImage from './nataly.jpg';
 import lautaroImage from './lautaro.jpg';
 import profile4Image from './profile4.jpg';
 import marcosImage from './marcos.jpeg';
-import profile6Image from './profile6.jpg';
 import gastonImage from "./gaston.jpeg";
 import '@fortawesome/fontawesome-free/css/all.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,46 +43,46 @@ const About = () => {
   // Información de las personas
   const teamMembers = [
     {
-      name: 'Gonzalo',
-      lastName: 'Calderón',
+      name: "Gonzalo",
+      lastName: "Calderón",
       photo: profile1Image,
-      github: 'https://github.com/GonzaJCalderon',
-      linkedin: 'https://www.linkedin.com/in/gonzalo-calder%C3%B3n-204218257'
+      github: "https://github.com/GonzaJCalderon",
+      linkedin: "https://www.linkedin.com/in/gonzalo-calder%C3%B3n-204218257",
     },
     {
-      name: 'Nataly',
-      lastName: 'Revelo',
+      name: "Nataly",
+      lastName: "Revelo",
       photo: natalyImage,
-      github: 'https://github.com/nreveloz',
-      linkedin: 'https://www.linkedin.com/in/nataly-revelo'
+      github: "https://github.com/nreveloz",
+      linkedin: "https://www.linkedin.com/in/nataly-revelo",
     },
     {
-      name: 'Lautaro',
-      lastName: 'Soto',
+      name: "Lautaro",
+      lastName: "Soto",
       photo: lautaroImage,
-      github: 'https://github.com/LautaroUnlp',
-      linkedin: 'https://www.linkedin.com/in/lautarosoto1/'
+      github: "https://github.com/LautaroUnlp",
+      linkedin: "https://www.linkedin.com/in/lautarosoto1/",
     },
     {
-      name: 'Jorge',
-      lastName: 'Jimenez',
+      name: "Jorge",
+      lastName: "Jimenez",
       photo: profile4Image,
-      github: 'https://github.com/JorgeJ97',
-      linkedin: 'https://www.linkedin.com'
+      github: "https://github.com/JorgeJ97",
+      linkedin: "https://www.linkedin.com",
     },
     {
-      name: 'Marcos',
-      lastName: 'Novella',
+      name: "Marcos",
+      lastName: "Novella",
       photo: marcosImage,
-      github: 'https://github.com/MarcosNovella',
-      linkedin: 'https://www.linkedin.com/in/marcos-novella-frey/'
+      github: "https://github.com/MarcosNovella",
+      linkedin: "https://www.linkedin.com/in/marcos-novella-frey/",
     },
     {
-      name: 'Gaston',
-      lastName: 'Garcia Juri',
-      photo: profile6Image,
-      github: 'https://github.com/gastigarciajuri',
-      linkedin: 'www.linkedin.com/in/gastón-garcia-juri-76a3b2212'
+      name: "Gaston",
+      lastName: "Garcia Juri",
+      photo: gastonImage,
+      github: "https://github.com/gastigarciajuri",
+      linkedin: "https://www.linkedin.com/in/gastón-garcia-juri-76a3b2212",
     },
   ];
 
