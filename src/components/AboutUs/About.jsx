@@ -54,7 +54,7 @@ const About = () => {
       lastName: "Revelo",
       photo: natalyImage,
       github: "https://github.com/nreveloz",
-      linkedin: "https://www.linkedin.com/in/nataly-revelo",
+      linkedin: "https://www.linkedin.com/in/nataly-revelo-zarama-794a4b165/",
     },
     {
       name: "Lautaro",
