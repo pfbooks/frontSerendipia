@@ -208,14 +208,19 @@ export function userById(id){
 export const bookAvailable = (id, availability) => {
     return async (dispatch) => {
         try {
-            const response = await axios.put(`${ENDPOINT_ADMIN}/availableBook`, {availability: !availability, id});
+            const localStorageUser = JSON.parse(localStorage.getItem('user'))
+            const response = await axios.put(`${ENDPOINT_ADMIN}/availableBook`, {availability: !availability, id}, {
+                headers: {
+                    Authorization: `${localStorageUser.token}`,
+                },
+            });
             const data = response.data;
             dispatch({
                 type: BOOK_AVAILABILITY,
                 payload: data,
             });
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     }
 }
