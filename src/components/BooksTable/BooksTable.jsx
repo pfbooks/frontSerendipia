@@ -106,6 +106,7 @@ const BooksTable = () => {
     if(event.target.checked) value = false
     else value = true
     dispatch(bookAvailable(book.id, value))
+    alert('Availability changed')
     dispatch(allBooksAdmin())
 }
 
