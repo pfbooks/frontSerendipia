@@ -31,6 +31,8 @@ export const ALL_ORDERS = "ALL_ORDERS";
 export const POST_REVIEW = "POST_REVIEW";
 export const ORDER_BY_USER = "ORDER_BY_USER";
 export const CREATE_BOOK = "CREATE_BOOK";
+export const BOOK_AVAILABILITY = "BOOK_AVAILABILITY";
+export const ALL_BOOKS_ADMIN = "ALL_BOOKS_ADMIN";
 
 // const ENDPOINT_ORDER = "http://localhost:3001/order";
 // const ENDPOINT_ADMIN = "http://localhost:3001/admin";
@@ -40,16 +42,16 @@ export const CREATE_BOOK = "CREATE_BOOK";
 // const ENDPOINT_USER = "http://localhost:3001/user";
 // const ENDPOINT_LOGIN = "http://localhost:3001/login";
 // const ENDPOINT_LOGIN_WHIT_GOOGLE = "http://localhost:3001/login/google"
-const API_URL = ''
 // const ENDPOINT_REVIEW = "http://localhost:3001/reviews";
 // const ENDPOINT_ORDER_BY_USER = "http://localhost:3001/order/by-user-id/";
+const API_URL = ''
 const ENDPOINT_BOOKS = "/books";
 const ENDPOINT_GENRE = "/genre";
 const ENDPOINT_AUTHORS = "/authors";
 const ENDPOINT_USER= "/user"
 const ENDPOINT_LOGIN_WHIT_GOOGLE = "/login/google"
 const ENDPOINT_LOGIN = "/login";
-const ENDPOINT_ORDER = "/order/"
+const ENDPOINT_ORDER = "/order"
 const ENDPOINT_ADMIN = "/admin"
 const ENDPOINT_REVIEW = "/reviews"
 const ENDPOINT_ORDER_BY_USER = "/order/by-user-id/"
@@ -63,6 +65,17 @@ export function allBooks() {
             });
         });
     };
+}
+
+export function allBooksAdmin() {
+    return async (dispatch) => {
+        await axios.get(`${ENDPOINT_ADMIN}/allBooks`).then((result) => {
+            return dispatch({
+                type: ALL_BOOKS_ADMIN,
+                payload: result.data,
+            })
+        })
+    }
 }
 
 export function allOrders() {
@@ -184,6 +197,21 @@ export function userById(id){
             })
         } catch (error) {
             console.log("User info error:", error)
+        }
+    }
+}
+
+export const bookAvailable = (id, availability) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.put(`${ENDPOINT_ADMIN}/availableBook`, {availability: !availability, id});
+            const data = response.data;
+            dispatch({
+                type: BOOK_AVAILABILITY,
+                payload: data,
+            });
+        } catch (error) {
+            console.log(error.message);
         }
     }
 }
