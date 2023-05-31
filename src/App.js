@@ -25,19 +25,17 @@ axios.defaults.baseURL="https://pfbooks-back-production.up.railway.app";
 function App() {
   const user = useSelector((state) => state.user);
   const location = useLocation();
+  const userLocalStorage = JSON.parse(localStorage.getItem("user"));
 
   const [admin, setAdmin] = useState(false);
   useEffect(() => {
-    if (user) {
-      if (user && user.adminRole) {
-        setAdmin(true);
-      } else {
-        setAdmin(false);
-      }
+    if (user || userLocalStorage) {
+      const isAdmin = user?.adminRole || userLocalStorage?.adminRole;
+      setAdmin(isAdmin);
     } else {
       setAdmin(false);
     }
-  }, [user]);
+  }, [user, userLocalStorage]);
 
   // const isProfileView = location.pathname === "/profile";
 
