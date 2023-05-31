@@ -20,7 +20,9 @@ import {
   UPDATE_USER_DATA,
   ALL_ORDERS,
   ORDER_BY_USER,
-  CREATE_BOOK
+  CREATE_BOOK,
+  BOOK_AVAILABILITY,
+  ALL_BOOKS_ADMIN
 } from "../actions/actions";
 import {
   CREATE_USER,
@@ -44,6 +46,7 @@ const initialState = {
   isLoading: false,
   error: null,
   orders: [],
+  booksAdmin: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -53,6 +56,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         books: action.payload,
+      };
+    
+    case BOOK_AVAILABILITY:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case ALL_BOOKS_ADMIN:
+      return {
+        ...state,
+        booksAdmin: action.payload,
       };
 
     case ALL_GENRE:
