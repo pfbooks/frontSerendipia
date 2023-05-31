@@ -84,7 +84,12 @@ export function allBooksAdmin() {
 
 export function allOrders() {
     return async (dispatch) => {
-        await axios.get(`${ENDPOINT_ORDER}`).then((result) => {
+        const localStorageUser = JSON.parse(localStorage.getItem('user'))
+        await axios.get(`${ENDPOINT_ORDER}`, {
+            headers: {
+                Authorization: `${localStorageUser.token}`,
+            },
+        }).then((result) => {
             return dispatch({
                 type: ALL_ORDERS,
                 payload: result.data,
@@ -385,7 +390,12 @@ export function createUser(user) {
 export function createBook(book){
     console.log(book);
     return async (dispatch) => {
-        await axios.post(`${ENDPOINT_BOOKS}/addBook`, book).then((result) => {
+        const localStorageUser = JSON.parse(localStorage.getItem('user'))
+        await axios.post(`${ENDPOINT_BOOKS}/addBook`, book, {
+            headers: {
+                Authorization: `${localStorageUser.token}`,
+            },
+        }).then((result) => {
             return dispatch({
                 type: CREATE_BOOK,
                 payload: result.data
