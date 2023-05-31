@@ -61,7 +61,7 @@ const rootReducer = (state = initialState, action) => {
     case BOOK_AVAILABILITY:
       return {
         ...state,
-        user: action.payload,
+        booksAdmin: action.payload,
       };
 
     case ALL_BOOKS_ADMIN:
