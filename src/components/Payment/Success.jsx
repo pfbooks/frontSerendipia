@@ -28,7 +28,7 @@ const Success = () => {
   return (
     <div className={styles.container}>
       <FaCheckCircle className={styles.icon} />
-      <h1 className={styles.title}>¡Pago Exitoso!</h1>
+      <h1 className={styles.title}>¡Successful Payment!</h1>
       <Link to={`/shop/${user.id}`}>
         <button className={styles.buttonLink}>My Shop</button>
       </Link>
